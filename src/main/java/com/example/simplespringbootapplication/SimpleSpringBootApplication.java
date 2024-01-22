@@ -18,16 +18,20 @@ class HelloController {
     }
 
     @GetMapping(value = "/{number}")
-    public ResponseEntity<?> hello(@PathVariable int number) {
-        String result = "none";
-        if (number % 15 == 0) {
-            result = "fizzbuzz";
-        } else if (number % 5 == 0) {
-            result = "fizz";
-        } else if (number % 3 == 0) {
-            result = "buzz";
+    public ResponseEntity<?> hello(@PathVariable String number) {
+        int num = Integer.valueOf(number);
+        return new ResponseEntity<>("Result is " + fizzBuzz(num), HttpStatus.OK);
+    }
+
+    private String fizzBuzz(int num) {
+        if (num % 15 == 0) {
+            return "FizzBuzz";
+        } else if (num % 5 == 0) {
+            return "Fizz";
+        } else if (num % 3 == 0) {
+            return "Buzz";
         }
-        return new ResponseEntity<>("Result is , " + result, HttpStatus.OK);
+        return "None";
     }
 
 }

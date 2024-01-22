@@ -9,24 +9,21 @@ const App: React.FC<AppProps> = () => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (isNaN(Number(inputValue))) {
-            setOutputValue("The input is not a valid number");
-        } else {
-            try {
-                const response = await fetch(`http://localhost:8080/${inputValue}`);
+        try {
+            const response = await fetch(`http://localhost:8080/${inputValue}`);
 
-                if (response.ok) {
-                    const res = await response.text();
-                    setOutputValue(res);
-                    console.log('Request successful, result is ' + res);
-                } else {
-                    console.error('Request failed');
-                }
-            } catch (error) {
-                console.error('Error occurred:', error);
+            console.log(response)
+            if (response.ok) {
+                const res = await response.text();
+                setOutputValue(res);
+                console.log('Request successful, result is ' + res);
+            } else {
+                setOutputValue("input is not a valid number");
+                console.error('Request failed ');
             }
+        } catch (error) {
+            console.error('Error occurred:', error);
         }
-
         setInputValue('');
     };
 
